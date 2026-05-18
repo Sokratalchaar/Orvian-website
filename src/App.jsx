@@ -29,6 +29,7 @@ import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 import './index.css';
 import orvianLogo from './assets/orvian-logo.png';
+import ChatWidget from './ChatWidget';
 
 function App() {
   const [scrolled, setScrolled] = useState(false);
@@ -773,6 +774,7 @@ function App() {
           </div>
         </div>
       )}
+      <ChatWidget />
     </>
   );
 }
