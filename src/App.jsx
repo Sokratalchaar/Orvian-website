@@ -45,6 +45,7 @@ function App() {
   const [formStatus, setFormStatus] = useState({ type: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeDemo, setActiveDemo] = useState(null);
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [emailError, setEmailError] = useState('');
 
   const validateEmailField = (email) => {
@@ -430,7 +431,7 @@ function App() {
 
           <div className="grid-3">
             {/* Card 1: AI Chat Demo */}
-            <div className="glass-card animate-fade-up interactive-card" onClick={() => setActiveDemo('chat')} style={{ animationDelay: '0.1s' }}>
+            <div className="glass-card animate-fade-up interactive-card" onClick={() => setIsChatOpen(true)} style={{ animationDelay: '0.1s' }}>
               <div className="demo-container chat-demo">
                 <div className="chat-bubble chat-user">Do you support custom AI models?</div>
                 <div className="chat-bubble chat-ai">Yes! We can integrate OpenAI, Anthropic, or custom fine-tuned models for your specific use cases. 🚀</div>
@@ -774,7 +775,7 @@ function App() {
           </div>
         </div>
       )}
-      <ChatWidget />
+      <ChatWidget isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
     </>
   );
 }

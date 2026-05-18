@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { MessageCircle, X, Send, Bot, Loader2 } from 'lucide-react';
 import orvianLogo from './assets/orvian-logo.png';
 
-function ChatWidget() {
-  const [isOpen, setIsOpen] = useState(false);
+function ChatWidget({ isOpen: propIsOpen, setIsOpen: propSetIsOpen }) {
+  const [localIsOpen, setLocalIsOpen] = useState(false);
+  const isOpen = propIsOpen !== undefined ? propIsOpen : localIsOpen;
+  const setIsOpen = propSetIsOpen !== undefined ? propSetIsOpen : setLocalIsOpen;
 
   // Persistent Session ID for n8n tracking
   const [sessionId] = useState(() => {
