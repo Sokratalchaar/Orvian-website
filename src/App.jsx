@@ -161,6 +161,37 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const animElements = document.querySelectorAll('.animate-fade-up');
+    
+    if (!('IntersectionObserver' in window)) {
+      animElements.forEach((el) => el.classList.add('revealed'));
+      return;
+    }
+
+    const observerOptions = {
+      root: null, // viewport
+      rootMargin: '0px 0px -80px 0px', // trigger slightly before entering the full screen for a smoother experience
+      threshold: 0.05 // trigger as soon as 5% of the element is visible
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    animElements.forEach((el) => observer.observe(el));
+
+    return () => {
+      animElements.forEach((el) => observer.unobserve(el));
+    };
+  }, []);
+
+
   const services = [
     {
       icon: <Bot size={24} />,
@@ -421,7 +452,7 @@ function App() {
             </div>
 
             {/* Card 2: Website Mockup Demo */}
-            <div className="glass-card animate-fade-up interactive-card" onClick={() => setActiveDemo('website')} style={{ animationDelay: '0.2s' }}>
+            <div className="glass-card animate-fade-up interactive-card" onClick={() => window.open('https://amazon-website-fm3h.onrender.com', '_blank', 'noopener,noreferrer')} style={{ animationDelay: '0.2s' }}>
               <div className="demo-container website-demo">
                 <div className="browser-bar">
                   <div className="browser-dot red"></div>
