@@ -1,0 +1,10 @@
+services:
+  - type: static
+    name: orvian-website
+    buildCommand: npm run build
+    staticPublishPath: dist
+    routes:
+      # Rewrite all requests that don't match a static file to index.html for client-side SPA routing
+      - type: rewrite
+        source: /*
+        destination: /index.html
