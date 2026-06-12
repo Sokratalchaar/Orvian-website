@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { MessageCircle, X, Send, Bot, Loader2 } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
 import orvianLogo from './assets/orvian-logo.png';
 
 function ChatWidget({ isOpen: propIsOpen, setIsOpen: propSetIsOpen }) {
@@ -50,6 +50,10 @@ function ChatWidget({ isOpen: propIsOpen, setIsOpen: propSetIsOpen }) {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
+  function scrollToBottom() {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }
+
   // Save messages to sessionStorage whenever they change
   useEffect(() => {
     try {
@@ -71,10 +75,6 @@ function ChatWidget({ isOpen: propIsOpen, setIsOpen: propSetIsOpen }) {
       }, 100);
     }
   }, [isOpen]);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   const handleSend = async (e) => {
     if (e) e.preventDefault();
@@ -123,7 +123,7 @@ function ChatWidget({ isOpen: propIsOpen, setIsOpen: propSetIsOpen }) {
         } else {
           aiReply = text;
         }
-      } catch (e) {
+      } catch {
         // If parsing fails, treat the response as plain text
         aiReply = text;
       }

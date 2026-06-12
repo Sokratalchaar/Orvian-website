@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Bot, 
   Cpu, 
@@ -8,20 +8,15 @@ import {
   CheckCircle2, 
   Zap, 
   ShieldCheck, 
-  Clock, 
   TrendingUp,
   Headset,
-  Menu,
   X,
   Mail,
   Camera,
   MessageCircle,
-  ExternalLink,
   Play,
   Globe,
   Database,
-  Server,
-  User,
   Send,
   Activity
 } from 'lucide-react';
@@ -30,10 +25,26 @@ import 'react-phone-number-input/style.css';
 import './index.css';
 import orvianLogo from './assets/orvian-logo.png';
 import ChatWidget from './ChatWidget';
+import PrivacyPolicy from './PrivacyPolicy';
 
 function App() {
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      setCurrentPath(window.location.pathname);
+    };
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
+  }, []);
+
+  const navigateTo = (path) => {
+    window.history.pushState({}, '', path);
+    setCurrentPath(path);
+    window.scrollTo(0, 0);
+  };
 
   const [formData, setFormData] = useState({
     name: '',
@@ -148,7 +159,7 @@ function App() {
       setFormStatus({ type: 'success', message: 'Thank you! Your message has been received and we will contact you shortly.' });
       setFormData({ name: '', email: '', phone: '', company: '', message: '' });
       setEmailError('');
-    } catch (error) {
+    } catch {
       setFormStatus({ type: 'error', message: 'Something went wrong. Please try again later.' });
     } finally {
       setIsSubmitting(false);
@@ -164,6 +175,8 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (currentPath !== '/') return;
+
     const animElements = document.querySelectorAll('.animate-fade-up');
     
     if (!('IntersectionObserver' in window)) {
@@ -191,7 +204,7 @@ function App() {
     return () => {
       animElements.forEach((el) => observer.unobserve(el));
     };
-  }, []);
+  }, [currentPath]);
 
 
   const services = [
@@ -231,6 +244,10 @@ function App() {
     { icon: <ShieldCheck size={24} />, title: "Business Focused", description: "ROI-driven automation." },
     { icon: <Headset size={24} />, title: "Ongoing Support", description: "Reliable maintenance and updates." }
   ];
+
+  if (currentPath === '/privacy-policy') {
+    return <PrivacyPolicy navigateTo={navigateTo} />;
+  }
 
   return (
     <>
@@ -668,7 +685,7 @@ function App() {
               <li><a href="#portfolio" style={{ color: 'var(--text-secondary)', transition: 'color 0.2s' }}>Portfolio</a></li>
               <li><a href="#why-us" style={{ color: 'var(--text-secondary)', transition: 'color 0.2s' }}>Why Us</a></li>
               <li><a href="#contact" style={{ color: 'var(--text-secondary)', transition: 'color 0.2s' }}>Contact</a></li>
-              <li><a href="#" style={{ color: 'var(--text-secondary)', transition: 'color 0.2s' }}>Privacy Policy</a></li>
+              <li><a href="/privacy-policy" onClick={(e) => { e.preventDefault(); navigateTo('/privacy-policy'); }} style={{ color: 'var(--text-secondary)', transition: 'color 0.2s' }}>Privacy Policy</a></li>
             </ul>
           </div>
         </div>
