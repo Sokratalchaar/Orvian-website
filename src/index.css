@@ -2291,3 +2291,91 @@ footer {
     gap: 0.25rem;
   }
 }
+
+/* ── Connect to Instagram Button Styles ──────────────── */
+.instagram-connect-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 1.25rem 0.5rem 0.65rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--text-primary);
+  border: 1px solid rgba(109, 40, 217, 0.18);
+  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-bottom: 1.5rem;
+  width: fit-content;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.instagram-connect-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #E1306C 0%, #C13584 30%, #833AB4 60%, #405DE6 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.instagram-connect-btn > * {
+  position: relative;
+  z-index: 2;
+}
+
+.instagram-btn-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #E1306C 0%, #C13584 50%, #833AB4 100%);
+  color: #ffffff;
+  transition: transform 0.3s ease;
+}
+
+.instagram-btn-icon {
+  display: block;
+}
+
+.instagram-btn-text {
+  font-family: var(--font-sans);
+  letter-spacing: -0.01em;
+}
+
+.instagram-btn-arrow {
+  color: var(--text-secondary);
+  opacity: 0.6;
+  transition: transform 0.3s ease, opacity 0.3s ease, color 0.3s ease;
+}
+
+.instagram-connect-btn:hover {
+  transform: translateY(-2px);
+  border-color: transparent;
+  box-shadow: 0 8px 20px rgba(131, 58, 180, 0.25);
+  color: #ffffff;
+}
+
+.instagram-connect-btn:hover::before {
+  opacity: 1;
+}
+
+.instagram-connect-btn:hover .instagram-btn-icon-wrapper {
+  transform: rotate(15deg) scale(1.1);
+  background: #ffffff;
+  color: #833AB4;
+}
+
+.instagram-connect-btn:hover .instagram-btn-arrow {
+  transform: translateX(3px);
+  opacity: 1;
+  color: #ffffff;
+}
+
