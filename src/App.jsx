@@ -84,17 +84,23 @@ function App() {
 
       const data = await response.json();
       
-      // Handle case where n8n returns an array, which is typical for webhooks
+      // Handle case where n8n returns an array of objects
       let parsedData = data;
       if (Array.isArray(data) && data.length > 0) {
         parsedData = data[0];
       }
       
-      if (parsedData && (parsedData.username || parsedData.success)) {
+      // Handle case where response properties are nested inside a "data" object
+      let finalData = parsedData;
+      if (parsedData && parsedData.data && typeof parsedData.data === 'object' && !Array.isArray(parsedData.data)) {
+        finalData = { ...parsedData, ...parsedData.data };
+      }
+      
+      if (finalData && (finalData.username || finalData.success)) {
         const connectionData = {
-          username: parsedData.username || 'user',
+          username: finalData.username || 'user',
           connectedAt: new Date().toISOString(),
-          ...parsedData
+          ...finalData
         };
         localStorage.setItem('orvian_instagram_connection', JSON.stringify(connectionData));
         setInstagramConnection(connectionData);
@@ -396,7 +402,7 @@ function App() {
                 <span className="instagram-btn-text">Connecting to Instagram...</span>
               </div>
             ) : instagramConnection ? (
-              <div className="instagram-connected-container animate-fade-up">
+              <div className="instagram-connected-container">
                 <div className="instagram-connect-btn connected">
                   <span className="instagram-btn-icon-wrapper">
                     <svg
