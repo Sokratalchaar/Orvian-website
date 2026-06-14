@@ -46,6 +46,88 @@ function App() {
     window.scrollTo(0, 0);
   };
 
+  const [instagramConnection, setInstagramConnection] = useState(() => {
+    try {
+      const saved = localStorage.getItem('orvian_instagram_connection');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [isConnectingInstagram, setIsConnectingInstagram] = useState(false);
+  const [instagramError, setInstagramError] = useState('');
+
+  const handleDisconnectInstagram = () => {
+    localStorage.removeItem('orvian_instagram_connection');
+    setInstagramConnection(null);
+  };
+
+  const handleExchangeInstagramCode = async (code) => {
+    setIsConnectingInstagram(true);
+    setInstagramError('');
+    
+    try {
+      const response = await fetch('https://n8n.orvian.me/webhook-test/instagram-oauth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          code,
+          redirect_uri: 'https://orvian.me/' 
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to exchange code: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      
+      // Handle case where n8n returns an array, which is typical for webhooks
+      let parsedData = data;
+      if (Array.isArray(data) && data.length > 0) {
+        parsedData = data[0];
+      }
+      
+      if (parsedData && (parsedData.username || parsedData.success)) {
+        const connectionData = {
+          username: parsedData.username || 'user',
+          connectedAt: new Date().toISOString(),
+          ...parsedData
+        };
+        localStorage.setItem('orvian_instagram_connection', JSON.stringify(connectionData));
+        setInstagramConnection(connectionData);
+      } else {
+        throw new Error('Invalid response format from server');
+      }
+    } catch (err) {
+      console.error('Instagram connection error:', err);
+      setInstagramError('Failed to connect to Instagram. Please try again.');
+    } finally {
+      setIsConnectingInstagram(false);
+      // Clean up the URL
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('code');
+        window.history.replaceState({}, document.title, url.pathname + url.search);
+      } catch (e) {
+        console.error('Failed to clean URL:', e);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    if (code) {
+      const timer = setTimeout(() => {
+        handleExchangeInstagramCode(code);
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -302,33 +384,82 @@ function App() {
           
           {/* Left Column - Text content */}
           <div className="hero-text-col animate-fade-up">
-            {/* Connect to Instagram Button */}
-            <a
-              href="https://www.instagram.com/oauth/authorize?force_reauth=true&client_id=1074934419045086&redirect_uri=https://orvian.me/&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish%2Cinstagram_business_manage_insights"
-              className="instagram-connect-btn"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span className="instagram-btn-icon-wrapper">
-                <svg
-                  viewBox="0 0 24 24"
-                  width="14"
-                  height="14"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="instagram-btn-icon"
+            {/* Instagram Connection State */}
+            {isConnectingInstagram ? (
+              <div className="instagram-connect-btn loading">
+                <span className="instagram-btn-icon-wrapper">
+                  <svg className="animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" width="14" height="14">
+                    <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.2)"></circle>
+                    <path d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path>
+                  </svg>
+                </span>
+                <span className="instagram-btn-text">Connecting to Instagram...</span>
+              </div>
+            ) : instagramConnection ? (
+              <div className="instagram-connected-container animate-fade-up">
+                <div className="instagram-connect-btn connected">
+                  <span className="instagram-btn-icon-wrapper">
+                    <svg
+                      viewBox="0 0 24 24"
+                      width="14"
+                      height="14"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="instagram-btn-icon"
+                    >
+                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                  </span>
+                  <span className="instagram-btn-text">Connected as @{instagramConnection.username}</span>
+                  <span className="connected-badge">Active</span>
+                </div>
+                <button 
+                  onClick={handleDisconnectInstagram}
+                  className="instagram-disconnect-action"
+                  title="Disconnect Instagram Account"
                 >
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
-              </span>
-              <span className="instagram-btn-text">Connect to Instagram</span>
-              <ArrowRight size={14} className="instagram-btn-arrow" />
-            </a>
+                  Disconnect
+                </button>
+              </div>
+            ) : (
+              <a
+                href="https://www.instagram.com/oauth/authorize?force_reauth=true&client_id=1074934419045086&redirect_uri=https://orvian.me/&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish%2Cinstagram_business_manage_insights"
+                className="instagram-connect-btn"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="instagram-btn-icon-wrapper">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="14"
+                    height="14"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="instagram-btn-icon"
+                  >
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                  </svg>
+                </span>
+                <span className="instagram-btn-text">Connect to Instagram</span>
+                <ArrowRight size={14} className="instagram-btn-arrow" />
+              </a>
+            )}
+
+            {instagramError && (
+              <div className="instagram-error-msg">
+                <span>⚠️</span> {instagramError}
+              </div>
+            )}
 
             {/* Eyebrow label */}
             <div className="hero-eyebrow">

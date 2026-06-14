@@ -2379,3 +2379,121 @@ footer {
   color: #ffffff;
 }
 
+/* Spinner animation */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.animate-spin {
+  animation: spin 1s linear infinite;
+  display: block;
+}
+
+.instagram-connect-btn.loading {
+  cursor: default;
+}
+
+.instagram-connect-btn.loading:hover {
+  transform: none;
+  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.04);
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(109, 40, 217, 0.18);
+  color: var(--text-primary);
+}
+
+.instagram-connect-btn.loading:hover::before {
+  opacity: 0;
+}
+
+.instagram-connect-btn.loading .instagram-btn-icon-wrapper {
+  background: linear-gradient(135deg, #E1306C 0%, #C13584 50%, #833AB4 100%);
+  color: #ffffff;
+}
+
+.instagram-connected-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  width: fit-content;
+  flex-wrap: wrap;
+}
+
+.instagram-connect-btn.connected {
+  margin-bottom: 0;
+  cursor: default;
+  border-color: rgba(34, 197, 94, 0.3);
+  background: rgba(240, 253, 244, 0.9);
+}
+
+.instagram-connect-btn.connected::before {
+  display: none;
+}
+
+.instagram-connect-btn.connected .instagram-btn-icon-wrapper {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+}
+
+.instagram-connect-btn.connected:hover {
+  transform: none;
+  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.04);
+  background: rgba(240, 253, 244, 0.9);
+  color: var(--text-primary);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.instagram-connect-btn.connected:hover .instagram-btn-icon-wrapper {
+  transform: none;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: #ffffff;
+}
+
+.connected-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #16a34a;
+  background: rgba(34, 197, 94, 0.12);
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-left: 0.25rem;
+}
+
+.instagram-disconnect-action {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #ef4444;
+  background: transparent;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+
+.instagram-disconnect-action:hover {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: #ef4444;
+  transform: translateY(-1px);
+}
+
+.instagram-error-msg {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8125rem;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  margin-top: -0.75rem;
+  margin-bottom: 1.5rem;
+  width: fit-content;
+}
+
+
