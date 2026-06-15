@@ -434,7 +434,7 @@ function App() {
               </div>
             ) : (
               <a
-                href="https://www.instagram.com/oauth/authorize?force_reauth=true&client_id=1074934419045086&redirect_uri=https://orvian.me/&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish%2Cinstagram_business_manage_insights"
+                href="https://www.instagram.com/oauth/authorize?force_reauth=true&client_id=1901500510520836&redirect_uri=https://orvian.me/&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish%2Cinstagram_business_manage_insights"
                 className="instagram-connect-btn"
                 target="_blank"
                 rel="noopener noreferrer"
