@@ -67,7 +67,7 @@ function App() {
     setInstagramError('');
     
     try {
-      const response = await fetch('https://n8n.orvian.me/webhook-test/instagram-oauth', {
+      const response = await fetch('https://n8n.orvian.me/webhook/instagram-oauth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
