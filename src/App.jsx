@@ -434,7 +434,7 @@ function App() {
               </div>
             ) : (
               <a
-                href="https://www.instagram.com/oauth/authorize?force_reauth=true&client_id=1901500510520836&redirect_uri=https://orvian.me/&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish%2Cinstagram_business_manage_insights"
+                href="https://www.facebook.com/v19.0/dialog/oauth?client_id=1901500510520836&redirect_uri=https://orvian.me/&scope=pages_show_list,pages_manage_metadata,instagram_basic,instagram_manage_messages,instagram_manage_comments&response_type=code"
                 className="instagram-connect-btn"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -456,7 +456,7 @@ function App() {
                     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                   </svg>
                 </span>
-                <span className="instagram-btn-text">Connect to Instagram</span>
+                <span className="instagram-btn-text">Connect Instagram via Facebook</span>
                 <ArrowRight size={14} className="instagram-btn-arrow" />
               </a>
             )}
