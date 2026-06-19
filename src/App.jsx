@@ -96,9 +96,8 @@ function App() {
         finalData = { ...parsedData, ...parsedData.data };
       }
       
-      if (finalData && (finalData.username || finalData.success)) {
+      if (finalData && (finalData.name || finalData.success)) {
         const connectionData = {
-          username: finalData.username || 'user',
           connectedAt: new Date().toISOString(),
           ...finalData
         };
@@ -421,7 +420,7 @@ function App() {
                       <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                     </svg>
                   </span>
-                  <span className="instagram-btn-text">Connected as @{instagramConnection.username}</span>
+                  <span className="instagram-btn-text">Connected as {instagramConnection.name}</span>
                   <span className="connected-badge">Active</span>
                 </div>
                 <button 
@@ -456,7 +455,7 @@ function App() {
                     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                   </svg>
                 </span>
-                <span className="instagram-btn-text">Connect Instagram via Facebook</span>
+                <span className="instagram-btn-text">Connect Facebook & Instagram</span>
                 <ArrowRight size={14} className="instagram-btn-arrow" />
               </a>
             )}
