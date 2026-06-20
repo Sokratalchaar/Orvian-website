@@ -433,7 +433,7 @@ function App() {
               </div>
             ) : (
               <a
-                href="https://www.facebook.com/v19.0/dialog/oauth?client_id=986892497656949&redirect_uri=https://orvian.me/&scope=pages_show_list,pages_manage_metadata,instagram_basic,instagram_manage_messages,instagram_manage_comments&response_type=code"
+                href="https://www.facebook.com/v19.0/dialog/oauth?client_id=986892497656949&redirect_uri=https%3A%2F%2Forvian.me%2F&scope=pages_show_list,pages_manage_metadata,pages_messaging,instagram_basic,instagram_manage_messages,instagram_manage_comments&response_type=code"
                 className="instagram-connect-btn"
                 target="_blank"
                 rel="noopener noreferrer"
