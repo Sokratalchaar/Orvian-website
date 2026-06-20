@@ -2505,4 +2505,19 @@ footer {
   width: fit-content;
 }
 
+/* Instagram connect block layout wrapper */
+.instagram-connect-block {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 1024px) {
+  .instagram-connect-block {
+    justify-content: center;
+  }
+}
+
+
 
