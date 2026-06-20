@@ -438,28 +438,56 @@ function App() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <span className="instagram-btn-icon-wrapper" style={{ gap: '2px' }}>
+                <span 
+                  className="instagram-btn-icon-wrapper" 
+                  style={{ 
+                    display: 'inline-flex', 
+                    position: 'relative', 
+                    width: '26px', 
+                    height: '20px', 
+                    background: 'none', 
+                    borderRadius: 0,
+                    border: 'none',
+                    boxShadow: 'none',
+                    marginRight: '2px'
+                  }}
+                >
                   <svg
                     viewBox="0 0 24 24"
-                    width="11"
-                    height="11"
-                    fill="currentColor"
+                    width="16"
+                    height="16"
+                    fill="#1877F2"
                     className="facebook-btn-icon"
+                    style={{ position: 'absolute', left: 0, top: '2px', zIndex: 1 }}
                   >
                     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
                   </svg>
                   <svg
                     viewBox="0 0 24 24"
-                    width="11"
-                    height="11"
-                    stroke="currentColor"
+                    width="16"
+                    height="16"
+                    stroke="url(#ig-btn-grad)"
                     strokeWidth="2.5"
                     fill="none"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     className="instagram-btn-icon"
+                    style={{ 
+                      position: 'absolute', 
+                      left: '10px', 
+                      top: '2px', 
+                      zIndex: 2,
+                      filter: 'drop-shadow(-1px 1px 1px rgba(0, 0, 0, 0.15))'
+                    }}
                   >
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <defs>
+                      <linearGradient id="ig-btn-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#FD5C63" />
+                        <stop offset="50%" stopColor="#C13584" />
+                        <stop offset="100%" stopColor="#833AB4" />
+                      </linearGradient>
+                    </defs>
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="#ffffff"></rect>
                     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                   </svg>
